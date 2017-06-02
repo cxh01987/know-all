@@ -12,7 +12,9 @@ http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/jso
 http://www.mulesoft.org/schema/mule/ee/ftp http://www.mulesoft.org/schema/mule/ee/ftp/current/mule-ftp-ee.xsd">
     <set-property propertyName="MULE_ENCODING" value="UTF-8" doc:name="Property" />
     <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
-    <http:request-config name="HTTP_Request_Configuration" host="api.map.baidu.com" basePath="/place/v2/" doc:name="HTTP Request Configuration" port="80"/>
+    <http:request-config name="HTTP_Request_Configuration" host="api.map.baidu.com" basePath="/place/v2/" doc:name="HTTP Request Configuration" port="80">
+        <http:raml-api-configuration location="baidu_map.raml"/>
+    </http:request-config>
     <http:request-config name="HTTP_Request_Configuration1" host="api.map.baidu.com" port="80" basePath="/location" doc:name="HTTP Request Configuration"/>
     <db:oracle-config name="Oracle_Configuration" host="10.100.40.209" port="1521" instance="XE" user="vtm" password="vtm" doc:name="Oracle Configuration"/>
     <flow name="know-allFlow">
@@ -25,12 +27,12 @@ http://www.mulesoft.org/schema/mule/ee/ftp http://www.mulesoft.org/schema/mule/e
         <logger message="InboundLog #[message.id] #[message.inboundProperties.'http.request.path']" level="INFO" doc:name="InboundLogger"/>
         <choice doc:name="Choice">
             <when expression="#[message.inboundProperties.'http.request.path'=='/ditu/search']">
-                <http:request config-ref="HTTP_Request_Configuration" path="search" method="GET" doc:name="RegionSearchHTTP">
+                <http:request config-ref="HTTP_Request_Configuration" path="/search" method="GET" doc:name="RegionSearchHTTP">
                     <http:request-builder>
-                        <http:query-param paramName="q" value="#[message.inboundProperties.'http.query.params'.q]"/>
-                        <http:query-param paramName="ak" value="9bP9TvRkA0FERGqgTTHObVEA8KCqviuz"/>
-                        <http:query-param paramName="region" value="#[message.inboundProperties.'http.query.params'.region]"/>
-                        <http:query-param paramName="output" value="json"/>
+                        <http:uri-param paramName="q" value="#[message.inboundProperties.'http.query.params'.q]"/>
+                        <http:uri-param paramName="ak" value="9bP9TvRkA0FERGqgTTHObVEA8KCqviuz"/>
+                        <http:uri-param paramName="region" value="#[message.inboundProperties.'http.query.params'.region]"/>
+                        <http:uri-param paramName="output" value="json"/>
                     </http:request-builder>
                 </http:request>
                 <logger message="BaiDuLog #[message.id] #[message.inboundProperties.'http.query.params']" level="INFO" doc:name="BaiDuLogger"/>

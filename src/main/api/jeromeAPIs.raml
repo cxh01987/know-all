@@ -1,2 +1,12 @@
 #%RAML 0.8
 title: Sample API
+baseUri: http://localhost:8081/
+
+/db:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [{"LOGCODE":"132","BANKNAME":"RE","VTMVERSION":"1.0.0","TERMINALTYPE":"VTM-X8372","MACHINEID":"1837-2456","LOCATION":"ui","ID":1162,"VTMSTATUS":null},{"LOGCODE":"900","BANKNAME":"234","VTMVERSION":"1.0.0","TERMINALTYPE":"VTM-X7890","MACHINEID":"9999-9999","LOCATION":"324","ID":1160,"VTMSTATUS":null}]

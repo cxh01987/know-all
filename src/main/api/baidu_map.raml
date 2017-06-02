@@ -1,0 +1,38 @@
+#%RAML 0.8
+---
+title: Sample API
+baseUri: http://api.map.baidu.com/place/v2/
+resourceTypes:
+  - baiduRESP:
+      type: string
+      enum: 
+        - json
+        - xml 
+
+/search:
+  #type: baiduRSP
+  displayName: 速查
+  description: 查询某个城市的某些店铺,如 西安市 酒店
+  uriParameters:
+    q:
+      type: string
+      default: "#[message.inboundProperties.'http.query.params'.q]"
+    ak:
+      type: string
+      default: 9bP9TvRkA0FERGqgTTHObVEA8KCqviuz
+    region:
+      type: string
+      default: "#[message.inboundProperties.'http.query.params'.region]"
+    output:
+      type: string
+      default: json
+      enum: 
+        - json
+        - xml
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {"name":"Jerome"}
