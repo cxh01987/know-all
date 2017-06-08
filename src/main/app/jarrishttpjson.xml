@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:wmq="http://www.mulesoft.org/schema/mule/ee/wmq" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:email="http://www.mulesoft.org/schema/mule/email" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/ee/wmq http://www.mulesoft.org/schema/mule/ee/wmq/current/mule-wmq-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+   <set-property propertyName="MULE_ENCODING" value="UTF-8" doc:name="Property" />
+    <http:listener-config name="HTTP_Listener_Configuration3" host="0.0.0.0" port="8085" doc:name="HTTP Listener Configuration"/>
+    <flow name="jarrishttpjsonFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration3" path="/" doc:name="HTTP">
+            <http:response-builder>
+                <http:header headerName="output" value="json"/>
+                <http:header headerName="charset" value="utf-8"/>
+            </http:response-builder>
+        </http:listener>
+        <json:json-to-object-transformer returnClass="com.jarris.bean.DatabaseCity" doc:name="JSON to Object" mimeType="application/json"/>
+
+
+        <logger level="INFO" doc:name="Logger" message="#[payload.name]"/>
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from city where id = #[payload.id]]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <set-payload value="#[payload]" encoding="GB18030" mimeType="application/json" doc:name="Set Payload"/>
+
+    </flow>
+</mule>
