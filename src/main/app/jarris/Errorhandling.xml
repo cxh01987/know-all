@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <flow name="errorhandlingFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration2" path="/errorHanding" doc:name="HTTP"/>
+        <logger level="INFO" doc:name="Logger"/>
+        <json:json-to-object-transformer returnClass="java.util.HashMap" doc:name="JSON to Object"/>
+        <custom-filter class="org.mule.examples.InputDataValidator" doc:name="Custom"/>
+        <logger message="#[payload.id =='1']" level="INFO" doc:name="Logger"/>
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from city where id = #[payload.id]]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <choice-exception-strategy doc:name="Choice Exception Strategy">
+            <catch-exception-strategy when="#[exception.causedBy(java.lang.IllegalArgumentException)]" doc:name="Caztch Invalid Data">
+                <set-payload value="Invalid input data: #[payload]" doc:name="Copy_of_Set Payload"/>
+            </catch-exception-strategy>
+            <catch-exception-strategy when="#[exception.causedBy(java.lang.NullPointerException)]" doc:name="Catch Missing Data">
+                <json:object-to-json-transformer doc:name="Object to JSON"/>
+                <json:json-to-object-transformer returnClass="com.jarris.bean.ErrorHanding" doc:name="JSON to Object"/>
+                <logger message="#[payload.email]" level="INFO" doc:name="Logger"/>
+                <set-payload value="Missing input data: #[payload.id]" doc:name="Copy_of_Set Payload"/>
+            </catch-exception-strategy>
+        </choice-exception-strategy>
+    </flow>
+</mule>

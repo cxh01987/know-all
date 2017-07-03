@@ -7,9 +7,8 @@
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
-    <http:listener-config name="HTTP_Listener_Configuration6" host="0.0.0.0" port="8086" doc:name="HTTP Listener Configuration"/>
     <flow name="transformDataFlow">
-        <http:listener config-ref="HTTP_Listener_Configuration6" path="/transform" doc:name="HTTP"/>
+        <http:listener config-ref="HTTP_Listener_Configuration8" path="/transform" doc:name="HTTP"/>
         <logger message="#[payload]" level="INFO" doc:name="Logger"/>
         <json:json-to-object-transformer doc:name="JSON to Object"  mimeType="application/json" returnClass="com.jarris.bean.Organization" ignoreBadInput="true"/>
         <logger level="INFO" doc:name="Logger" message="#[payload.team]"/>

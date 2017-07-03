@@ -14,8 +14,10 @@ http://www.mulesoft.org/schema/mule/jersey http://www.mulesoft.org/schema/mule/j
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
     <ws:consumer-config name="Web_Service_Consumer" wsdlLocation="src/main/resources/service/UploadPdfServiceImpl1.wsdl" service="UploadPdfServiceImpl" port="UploadPdfServiceImplPort" serviceAddress="http://localhost:8080/group-vtc-service-prd/webservice/UploadPdfServiceImpl" doc:name="Web Service Consumer"/>
     <ws:consumer-config name="Web_Service_Consumer1" wsdlLocation="src/main/resources/service/WeatherWebService.wsdl" service="WeatherWebService" port="WeatherWebServiceSoap" serviceAddress="http://www.webxml.com.cn/WebServices/WeatherWebService.asmx" doc:name="Web Service Consumer"/>
+    <http:listener-config name="HTTP_Listener_Configuration8" host="0.0.0.0" port="10008" doc:name="HTTP Listener Configuration"/>
+    <http:listener-config name="HTTP_Listener_Configuration9" host="0.0.0.0" port="10009" doc:name="HTTP Listener Configuration"/>
     <flow name="soapwebserviceFlow">
-        <http:listener config-ref="HTTP_Listener_Configuration" path="/webservice/*" doc:name="HTTP"/>
+        <http:listener config-ref="HTTP_Listener_Configuration9" path="/webservice/*" doc:name="HTTP"/>
         <logger message="#[payload]" level="INFO" doc:name="Logger"/>
         <dw:transform-message metadata:id="9127a38b-7a79-403f-ac7c-2ff674d997bc" doc:name="Transform Message">
             <dw:set-payload><![CDATA[%dw 1.0

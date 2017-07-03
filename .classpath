@@ -4,12 +4,17 @@
 	<classpathentry kind="src" path="src/main/api"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry kind="lib" path="src/main/app/lib/ojdbc6-11.2.0.4.jar"/>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="src" path="src/test/munit"/>
 	<classpathentry exported="true" kind="con" path="MULE_RUNTIME/org.mule.tooling.server.3.7.3.ee"/>
 	<classpathentry kind="con" path="MUNIT_RUNTIME"/>
+	<classpathentry kind="lib" path="C:/Users/jarries/.m2/repository/mysql/mysql/5.1.39/mysql-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jarries/.m2/repository/ojdbc6/ojdbc6/11.2.0.4/ojdbc6-11.2.0.4.jar"/>
+	<classpathentry kind="lib" path="src/main/app/lib/rt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jarries/.m2/repository/io/jsonwebtoken/jjwt/0.7.0/jjwt-0.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jarries/.m2/repository/io/jsonwebtoken/jjwt/0.7.0/jjwt-0.7.0-sources.jar"/>
+	<classpathentry kind="con" path="MULE_LIB/APIkit/org.mule.tooling.apikit.3.7.0"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

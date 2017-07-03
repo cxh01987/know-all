@@ -14,9 +14,9 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
  <set-property propertyName="MULE_ENCODING" value="UTF-8" doc:name="Property" />
-<http:listener-config name="HTTP_Listener_Configuration5" host="0.0.0.0" port="8088" basePath="file" doc:name="HTTP Listener Configuration"/>
+<http:listener-config name="HTTP_Listener_Configuration15" host="0.0.0.0" port="10015"  doc:name="HTTP Listener Configuration"/>
 <flow name="simpletestFlow">
-<http:listener config-ref="HTTP_Listener_Configuration5" path="/" doc:name="HTTP"/>
+<http:listener config-ref="HTTP_Listener_Configuration11" path="/" doc:name="HTTP"/>
         <logger message="#[message.inboundAttachments.entrySet()]" level="INFO" doc:name="Logger"/>
 <foreach collection="#[message.inboundAttachments]" doc:name="For Each" doc:description="#[message.inboundAttachments]">
             <logger message="#[payload.dataSource.part.fileName]" level="INFO" doc:name="Logger"/>

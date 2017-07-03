@@ -1,0 +1,24 @@
+#%RAML 0.8
+---
+title: Sample API
+baseUri: http://10.100.41.213:8080/up-svc
+
+/#[message.inboundProperties.'http.request.path']:
+  post:
+    body:
+      application/json:
+        example: |
+          {"Jerome":"I Love Jerome"}
+    responses:
+      200:
+        body:
+          application/json:
+             example: |
+               {"statusCde":"0000","desc":null,"employee":{"id":2523,"staffId":"E100085225","ehrId":"E100085225","lName":"李园","chName":"李园","biLevel":"SSE","currtProj":null,"level":3,"aleader":{"id":2430,"staffId":null,"name":null},"password":"x4tmY9R8+9tNZepRwQQETg==","isOfic":1,"nickname":"李园","bltype":"Fixed Cost","isassistant":0,"bugroup":649,"onBoadDay":"2017/05/01","releaseDay":null,"resignReason":null,"flag":0,"subpm":null},"projects":[],"leaders":[]}   
+  get:
+     responses:
+      200:
+        body:
+          application/json:
+             example: |
+               {"statusCde":"0000","desc":null,"employee":{"id":2523,"staffId":"E100085225","ehrId":"E100085225","lName":"李园","chName":"李园","biLevel":"SSE","currtProj":null,"level":3,"aleader":{"id":2430,"staffId":null,"name":null},"password":"x4tmY9R8+9tNZepRwQQETg==","isOfic":1,"nickname":"李园","bltype":"Fixed Cost","isassistant":0,"bugroup":649,"onBoadDay":"2017/05/01","releaseDay":null,"resignReason":null,"flag":0,"subpm":null},"projects":[],"leaders":[]}        

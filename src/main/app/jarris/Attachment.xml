@@ -8,9 +8,9 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd">
-    <http:listener-config name="HTTP_Listener_Configuration2" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration" basePath="Mybasepath"/>
+    <http:listener-config name="HTTP_Listener_Configuration1" host="0.0.0.0" port="10001" doc:name="HTTP Listener Configuration" />
     <flow name="httpfileuploadFlow">
-        <http:listener config-ref="HTTP_Listener_Configuration2" path="/" doc:name="HTTP" parseRequest="false"/>
+        <http:listener config-ref="HTTP_Listener_Configuration1" path="/attachment" doc:name="HTTP" parseRequest="false"/>
         <logger level="INFO" doc:name="Logger"/>
         <set-attachment attachmentName="multipartFile"   doc:name="Attachment" contentType="multipart/x-zip" value="multipartFile"/>
         <file:outbound-endpoint path="D:\Mule\output1" responseTimeout="10000" doc:name="File" outputPattern="file.txt"/>

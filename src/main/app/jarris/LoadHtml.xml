@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 	<!-- listen for requests in port 8081 -->
     <flow name="httpRenderFlow">
     	<!-- Listen only for GET requests in /uploadFile uri -->
-        <http:listener allowedMethods="GET" config-ref="HTTP_Listener_Configuration6" doc:name="HTTP" path="/uploadFile"/>
+        <http:listener allowedMethods="GET" config-ref="HTTP_Listener_Configuration3" doc:name="HTTP" path="/uploadFile"/>
         <!-- Provide a form to upload the file through the browser -->
         <parse-template doc:name="Upload file page" location="uploadFile.html"/>
     </flow>

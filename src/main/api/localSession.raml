@@ -1,0 +1,20 @@
+#%RAML 0.8
+---
+title: Sample API
+baseUri: http://localhost:8080/sessionTest
+
+/UserServlet:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {"msg":"OK"}
+  post:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {"msg":"Set session done!"}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:request-config name="HTTP_Request_Configuration3" host="localhost" port="8080" basePath="/group-vtc-service-prd/service/" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/testSession.raml"/>
+    </http:request-config>
+    <http:request-config name="HTTP_Request_Configuration4" host="localhost" port="8080" basePath="/group-vtc-service-prd/service/" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/testSession.raml"/>
+    </http:request-config>
+    <http:listener-config name="HTTP_Listener_Configuration7" host="0.0.0.0" port="10007" doc:name="HTTP Listener Configuration"/>
+    <flow name="testsessionFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration7" path="/*" doc:name="HTTP"/>
+        <logger message="#[message.inboundProperties.'http.request.path'h]" level="INFO" doc:name="Logger"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.inboundProperties.'http.request.path'=='/vtaProfile/findAll']">
+                <logger message="Variable2 set with #[sessionVars.messageID]" level="INFO" doc:name="Copy_of_Logger"/>
+                <set-session-variable variableName="messageID" value="&quot;****************&quot;" doc:name="Session Variable"/>
+                <logger message="Variable set with #[sessionVars.messageID]" level="INFO" doc:name="Logger"/>
+            </when>
+            <otherwise>
+                <logger message="Variable2 set with #[sessionVars.messageID]" level="INFO" doc:name="Logger"/>
+            </otherwise>
+        </choice>
+    </flow>
+</mule>

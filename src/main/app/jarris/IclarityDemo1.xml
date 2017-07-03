@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:jersey="http://www.mulesoft.org/schema/mule/jersey" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/jersey http://www.mulesoft.org/schema/mule/jersey/current/mule-jersey.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration3" host="0.0.0.0" port="10003" doc:name="HTTP Listener Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration5" host="10.100.41.213" port="8080" basePath="/up-svc" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/iclarityRaml.raml"/>
+    </http:request-config>
+    <http:request-config name="HTTP_Request_Configuration6" host="10.100.41.213" port="8080" basePath="/up-svc" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/iclarityRaml.raml"/>
+    </http:request-config>
+    <http:request-config name="HTTP_Request_Configuration7" host="10.100.41.213" port="8080" basePath="/up-svc" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/iclarityRaml.raml"/>
+    </http:request-config>
+    <http:request-config name="HTTP_Request_Configuration8" host="10.100.41.213" port="8080" basePath="/up-svc" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/iclarityRaml.raml"/>
+    </http:request-config>
+    <http:request-config name="HTTP_Request_Configuration9" host="10.100.41.213" port="8080" basePath="/up-svc" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="src/main/api/iclarityRaml.raml"/>
+    </http:request-config>
+    <flow name="iclaritydemoFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration3" path="/*" doc:name="HTTP"/>
+        <logger message="#[message.inboundProperties.'http.request.path']" level="INFO" doc:name="Logger"/>
+        <choice doc:name="Choice">
+            <when expression="#[message.inboundProperties.'http.request.path' == '/iclarity_authoriz/empEvtLogin']">
+                <http:request config-ref="HTTP_Request_Configuration5" path="/#[message.inboundProperties.'http.request.path']" method="POST" doc:name="HTTP"/>
+                <custom-transformer class="com.jarris.iclarityCreateToken" doc:name="Java" />
+                <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+            </when>
+            <otherwise>
+                <custom-transformer class="com.jarris.iclarityParseToken" doc:name="Java"/>
+                <choice doc:name="Choice">
+                    <when expression="#[message.inboundProperties.'http.method'=='get']">
+                        <http:request config-ref="HTTP_Request_Configuration8" path="/#[message.inboundProperties.'http.request.path']" method="GET" doc:name="HTTP"/>
+                    </when>
+                    <otherwise>
+                        <http:request config-ref="HTTP_Request_Configuration9" path="/#[message.inboundProperties.'http.request.path']" method="POST" doc:name="HTTP"/>
+                    </otherwise>
+                </choice>
+            </otherwise>
+        </choice>
+    </flow>
+</mule>

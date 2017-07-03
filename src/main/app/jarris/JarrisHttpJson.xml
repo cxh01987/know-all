@@ -12,7 +12,7 @@ http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/em
 http://www.mulesoft.org/schema/mule/ee/wmq http://www.mulesoft.org/schema/mule/ee/wmq/current/mule-wmq-ee.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
    <set-property propertyName="MULE_ENCODING" value="UTF-8" doc:name="Property" />
-    <http:listener-config name="HTTP_Listener_Configuration3" host="0.0.0.0" port="8085" doc:name="HTTP Listener Configuration"/>
+    <http:listener-config name="HTTP_Listener_Configuration4" host="0.0.0.0" port="10004" doc:name="HTTP Listener Configuration"/>
     <flow name="jarrishttpjsonFlow">
         <http:listener config-ref="HTTP_Listener_Configuration3" path="/" doc:name="HTTP">
             <http:response-builder>
